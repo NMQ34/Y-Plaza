@@ -1,12 +1,19 @@
 import { Building2, Mail, Phone, MapPin } from 'lucide-react';
 import './Footer.css';
 
-export default function Footer() {
+export default function Footer({ setCurrentPage }) {
+  const handleNavClick = (page) => {
+    if (setCurrentPage) {
+      setCurrentPage(page);
+      window.scrollTo(0, 0);
+    }
+  };
+
   return (
     <footer className="footer">
       <div className="container footer-content">
         <div className="footer-brand">
-          <div className="logo">
+          <div className="logo" onClick={() => handleNavClick('home')} style={{ cursor: 'pointer' }}>
             <Building2 size={32} className="logo-icon" />
             <span className="logo-text">Y-Plaza</span>
           </div>
@@ -18,11 +25,36 @@ export default function Footer() {
 
         <div className="footer-links-group">
           <h4>Navigation</h4>
-          <ul>
-            <li><a href="#home">Accueil</a></li>
-            <li><a href="#properties">Nos Biens</a></li>
-            <li><a href="#dashboard">Analyse IA</a></li>
-            <li><a href="#agencies">Nos Agences</a></li>
+          <ul style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+            <li>
+              <button 
+                className="footer-nav-link"
+                onClick={() => handleNavClick('home')}
+              >
+                Accueil
+              </button>
+            </li>
+            <li>
+              <button 
+                className="footer-nav-link"
+                onClick={() => {
+                  handleNavClick('home');
+                  setTimeout(() => {
+                    document.getElementById('properties')?.scrollIntoView({ behavior: 'smooth' });
+                  }, 100);
+                }}
+              >
+                Nos Biens
+              </button>
+            </li>
+            <li>
+              <button 
+                className="footer-nav-link"
+                onClick={() => handleNavClick('dashboard')}
+              >
+                Analyse IA
+              </button>
+            </li>
           </ul>
         </div>
 

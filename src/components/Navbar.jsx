@@ -2,13 +2,13 @@ import { useState, useEffect } from 'react';
 import { Building2, Menu, X } from 'lucide-react';
 import './Navbar.css';
 
-export default function Navbar({ currentPage, setCurrentPage }) {
+export default function Navbar({ currentPage, setCurrentPage, user, onLogout }) {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 50);
+      setScrolled(window.scrollY > 120);
     };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
@@ -52,9 +52,31 @@ export default function Navbar({ currentPage, setCurrentPage }) {
           >
             Analyse IA
           </button>
-          <button className="btn-primary login-btn">
-            Espace Agence
-          </button>
+          {user ? (
+            <>
+              <button 
+                className={`nav-btn ${currentPage === 'agency' ? 'active' : ''}`}
+                onClick={() => handleNavClick('agency')}
+                style={{ fontWeight: 600, color: 'var(--accent-color)' }}
+              >
+                Mon Espace
+              </button>
+              <button 
+                className="btn-outline logout-btn" 
+                onClick={onLogout}
+                style={{ padding: '6px 16px', fontSize: '0.85rem' }}
+              >
+                Déconnexion ({user.name.split(' ')[0]})
+              </button>
+            </>
+          ) : (
+            <button 
+              className={`btn-primary login-btn ${currentPage === 'login' ? 'active' : ''}`}
+              onClick={() => handleNavClick('login')}
+            >
+              Espace Agence
+            </button>
+          )}
         </div>
 
         <button className="mobile-menu-btn" onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>

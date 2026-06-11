@@ -36,12 +36,18 @@
   margin-bottom: 12px;
 }
 
-.footer a {
+.footer a, .footer-nav-link {
   color: var(--text-muted);
+  background: transparent;
+  border: none;
+  font-family: inherit;
+  font-size: inherit;
+  cursor: pointer;
+  padding: 0;
   transition: color var(--transition-fast);
 }
 
-.footer a:hover {
+.footer a:hover, .footer-nav-link:hover {
   color: var(--accent-color);
 }
 

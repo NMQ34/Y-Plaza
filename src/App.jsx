@@ -1,13 +1,36 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Navbar from './components/Navbar';
 import Home from './pages/Home';
 import Dashboard from './pages/Dashboard';
+import Login from './pages/Login';
+import AgencySpace from './pages/AgencySpace';
+import PropertyDetail from './pages/PropertyDetail';
 import Footer from './components/Footer';
 import './App.css';
 
 function App() {
   const [currentPage, setCurrentPage] = useState('home');
+  const [user, setUser] = useState(null);
+  const [selectedProperty, setSelectedProperty] = useState(null);
+
+  // Charger la session de l'utilisateur au démarrage
+  useEffect(() => {
+    const storedUser = localStorage.getItem('yplaza_user');
+    if (storedUser) {
+      try {
+        setUser(JSON.parse(storedUser));
+      } catch (e) {
+        localStorage.removeItem('yplaza_user');
+      }
+    }
+  }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem('yplaza_user');
+    setUser(null);
+    setCurrentPage('home');
+  };
 
   const pageVariants = {
     initial: {
@@ -30,7 +53,7 @@ function App() {
   const pageTransition = {
     type: "tween",
     ease: "anticipate",
-    duration: 0.6
+    duration: 0.5
   };
 
   return (
@@ -43,7 +66,12 @@ function App() {
         <div className="video-overlay"></div>
       </div>
 
-      <Navbar currentPage={currentPage} setCurrentPage={setCurrentPage} />
+      <Navbar 
+        currentPage={currentPage} 
+        setCurrentPage={setCurrentPage} 
+        user={user} 
+        onLogout={handleLogout} 
+      />
       
       <main className="main-content" style={{ position: 'relative', zIndex: 1 }}>
         <AnimatePresence mode="wait">
@@ -56,7 +84,13 @@ function App() {
               variants={pageVariants}
               transition={pageTransition}
             >
-              <Home setCurrentPage={setCurrentPage} />
+              <Home 
+                setCurrentPage={setCurrentPage} 
+                onPropertyClick={(prop) => {
+                  setSelectedProperty(prop);
+                  setCurrentPage('property-detail');
+                }}
+              />
             </motion.div>
           )}
           {currentPage === 'dashboard' && (
@@ -71,12 +105,52 @@ function App() {
               <Dashboard />
             </motion.div>
           )}
+          {currentPage === 'login' && (
+            <motion.div
+              key="login"
+              initial="initial"
+              animate="in"
+              exit="out"
+              variants={pageVariants}
+              transition={pageTransition}
+            >
+              <Login setUser={setUser} setCurrentPage={setCurrentPage} />
+            </motion.div>
+          )}
+          {currentPage === 'agency' && (
+            <motion.div
+              key="agency"
+              initial="initial"
+              animate="in"
+              exit="out"
+              variants={pageVariants}
+              transition={pageTransition}
+            >
+              <AgencySpace user={user} />
+            </motion.div>
+          )}
+          {currentPage === 'property-detail' && selectedProperty && (
+            <motion.div
+              key="property-detail"
+              initial="initial"
+              animate="in"
+              exit="out"
+              variants={pageVariants}
+              transition={pageTransition}
+            >
+              <PropertyDetail 
+                property={selectedProperty} 
+                setCurrentPage={setCurrentPage} 
+              />
+            </motion.div>
+          )}
         </AnimatePresence>
       </main>
 
-      <Footer />
+      <Footer setCurrentPage={setCurrentPage} />
     </div>
   );
 }
 
 export default App;
+
