@@ -75,14 +75,3 @@ Les fichiers compilés seront disponibles dans le dossier `dist/`.
 
 ---
 
-## 🧠 Zoom sur l'IA : Est-ce vraiment de l'IA ?
-
-**Oui, c'est du Machine Learning (apprentissage supervisé).** 
-Plutôt que d'utiliser des coefficients fixes ou des règles arbitraires codées en dur, l'estimateur de prix utilise l'algorithme de **régression linéaire multivariée**.
-
-1.  **Entraînement (`data_analyzer.py`)** : Le modèle prend en entrée le vecteur de caractéristiques $X$ (constante d'ordonnée à l'origine, surface habitable, nombre de chambres, nombre de salles de bain) et effectue un encodage matriciel (One-Hot) des villes pour intégrer l'impact géographique.
-2.  **Apprentissage (Moindres Carrés)** : Il calcule les coefficients optimaux $\beta$ en résolvant l'équation normale de régression :
-    $$\beta = (X^T \cdot X)^{-1} \cdot X^T \cdot y$$
-    où $y$ représente le prix réel des biens en base.
-3.  **Inférence (Prédiction)** : Lors d'une saisie utilisateur sur le tableau de bord, le modèle multiplie le vecteur saisi par les coefficients $\beta$ appris pour déduire la valeur estimée. Le modèle se ré-entraîne automatiquement à chaque ajout de bien ou vente validée.
-
