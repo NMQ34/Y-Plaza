@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { ShieldAlert, LogIn, User } from 'lucide-react';
+import { API_URL } from '../config';
 import './Login.css';
 
 export default function Login({ setUser, setCurrentPage }) {
@@ -23,7 +24,7 @@ export default function Login({ setUser, setCurrentPage }) {
     }
 
     try {
-      const response = await fetch('http://4.251.144.215:5000/api/auth/login', {
+      const response = await fetch(`${API_URL}/auth/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

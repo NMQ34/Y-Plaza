@@ -546,11 +546,20 @@ def trigger_backup():
 
 
 if __name__ == '__main__':
+    # Initialiser la base de données automatiquement si elle est absente ou vide (ex: volume Docker vide)
+    if not os.path.exists(DB_PATH) or os.path.getsize(DB_PATH) == 0:
+        print("Base de données manquante ou vide. Initialisation automatique de la BDD...")
+        try:
+            from init_db import init_db
+            init_db()
+        except Exception as e:
+            print(f"Erreur d'initialisation automatique de la BDD : {e}")
+
     # Entraîner le prédicteur au lancement
     try:
         analyzer.train_price_predictor()
     except Exception as e:
         print(f"Erreur d'entraînement initial : {e}")
         
-    print("Démarrage du serveur Flask sur http://0.0.0.0:5000 ip publique de la VM3")
+    print("Démarrage du serveur Flask sur http://0.0.0.0:5000")
     app.run(host='0.0.0.0', port=5000, debug=True)

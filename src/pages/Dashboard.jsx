@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { BarChart3, TrendingUp, DollarSign, Activity, Sparkles, Building } from 'lucide-react';
+import { API_URL } from '../config';
 import './Dashboard.css';
 
 export default function Dashboard() {
@@ -21,13 +22,13 @@ export default function Dashboard() {
     setError('');
     try {
       // Fetch stats
-      const statsRes = await fetch('http://4.251.144.215:5000/api/dashboard/stats');
+      const statsRes = await fetch(`${API_URL}/dashboard/stats`);
       if (!statsRes.ok) throw new Error("Erreur de chargement des statistiques");
       const statsData = await statsRes.json();
       setStats(statsData);
 
       // Fetch predictions
-      const predRes = await fetch('http://4.251.144.215:5000/api/dashboard/predictions');
+      const predRes = await fetch(`${API_URL}/dashboard/predictions`);
       if (!predRes.ok) throw new Error("Erreur de chargement des prévisions");
       const predData = await predRes.json();
       setPredictions(predData);
@@ -81,7 +82,7 @@ export default function Dashboard() {
     setCalcLoading(true);
     setPredictedPrice(null);
     try {
-      const url = `http://4.251.144.215:5000/api/dashboard/predict-price?ville=${encodeURIComponent(calcCity)}&sqft=${calcSqft}&beds=${calcBeds}&baths=${calcBaths}`;
+      const url = `${API_URL}/dashboard/predict-price?ville=${encodeURIComponent(calcCity)}&sqft=${calcSqft}&beds=${calcBeds}&baths=${calcBaths}`;
       const res = await fetch(url);
       if (!res.ok) throw new Error("Erreur de calcul");
       const data = await res.json();

@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { MapPin, Bed, Bath, Maximize } from 'lucide-react';
+import { API_URL } from '../config';
 import './PropertyList.css';
 
 export default function PropertyList({ onPropertyClick }) {
@@ -10,7 +11,7 @@ export default function PropertyList({ onPropertyClick }) {
   useEffect(() => {
     const fetchProperties = async () => {
       try {
-        const response = await fetch('http://4.251.144.215:5000/api/properties?status=disponible');
+        const response = await fetch(`${API_URL}/properties?status=disponible`);
         if (!response.ok) throw new Error();
         const data = await response.json();
         setProperties(data);

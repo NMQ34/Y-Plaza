@@ -41,7 +41,7 @@ L'**Espace Agence** intègre un simulateur fidèle de la matrice de droits NTFS 
 1.  Ouvrez un terminal dans le dossier `backend/`.
 2.  Installez les dépendances Python requises :
     ```bash
-    pip install flask flask-cors pandas numpy
+    pip install -r requirements.txt
     ```
 3.  Initialisez la base de données et le CSV d'analyse :
     ```bash
@@ -51,7 +51,7 @@ L'**Espace Agence** intègre un simulateur fidèle de la matrice de droits NTFS 
     ```bash
     python app.py
     ```
-    *Le serveur démarre sur `http://127.0.0.1:5000`.*
+    *Le serveur démarre sur `http://0.0.0.0:5000` (écoute sur toutes les interfaces réseau pour être accessible depuis le réseau VM).*
 
 ### 3. Démarrage du Frontend React
 
