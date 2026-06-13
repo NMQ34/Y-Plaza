@@ -23,7 +23,7 @@ export default function Login({ setUser, setCurrentPage }) {
     }
 
     try {
-      const response = await fetch('http://127.0.0.1:5000/api/auth/login', {
+      const response = await fetch('http://4.251.144.215:5000/api/auth/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

@@ -48,7 +48,7 @@ export default function AgencySpace({ user }) {
   // 1. Fetch properties
   const fetchProperties = async () => {
     try {
-      const response = await fetch('http://127.0.0.1:5000/api/properties');
+      const response = await fetch('http://4.251.144.215:5000/api/properties');
       if (!response.ok) throw new Error("Erreur de chargement des biens");
       const data = await response.json();
       setProperties(data);
@@ -64,7 +64,7 @@ export default function AgencySpace({ user }) {
     setFolderFiles([]);
     
     try {
-      const url = `http://127.0.0.1:5000/api/files?folder=${encodeURIComponent(folderName)}`;
+      const url = `http://4.251.144.215:5000/api/files?folder=${encodeURIComponent(folderName)}`;
       const response = await fetch(url, {
         method: 'GET',
         headers: apiHeaders
@@ -91,7 +91,7 @@ export default function AgencySpace({ user }) {
   const fetchSecurityLogs = async () => {
     if (user?.role !== 'IT et Support') return;
     try {
-      const response = await fetch('http://127.0.0.1:5000/api/logs', {
+      const response = await fetch('http://4.251.144.215:5000/api/logs', {
         headers: apiHeaders
       });
       if (!response.ok) throw new Error("Erreur lors de la lecture des logs");
@@ -115,7 +115,7 @@ export default function AgencySpace({ user }) {
     setPropSuccess('');
 
     try {
-      const response = await fetch('http://127.0.0.1:5000/api/properties', {
+      const response = await fetch('http://4.251.144.215:5000/api/properties', {
         method: 'POST',
         headers: apiHeaders,
         body: JSON.stringify(newProp)
@@ -141,7 +141,7 @@ export default function AgencySpace({ user }) {
     setPropSuccess('');
 
     try {
-      const response = await fetch(`http://127.0.0.1:5000/api/properties/${sellModalId}`, {
+      const response = await fetch(`http://4.251.144.215:5000/api/properties/${sellModalId}`, {
         method: 'PUT',
         headers: apiHeaders,
         body: JSON.stringify({ status: 'vendu', buyer_name: buyerName })
@@ -165,7 +165,7 @@ export default function AgencySpace({ user }) {
     setPropSuccess('');
 
     try {
-      const response = await fetch(`http://127.0.0.1:5000/api/properties/${id}`, {
+      const response = await fetch(`http://4.251.144.215:5000/api/properties/${id}`, {
         method: 'DELETE',
         headers: apiHeaders
       });
@@ -195,7 +195,7 @@ export default function AgencySpace({ user }) {
       const headers = { ...apiHeaders };
       delete headers['Content-Type']; // Laisser le navigateur configurer boundary
 
-      const response = await fetch('http://127.0.0.1:5000/api/files', {
+      const response = await fetch('http://4.251.144.215:5000/api/files', {
         method: 'POST',
         headers: headers,
         body: formData
@@ -218,7 +218,7 @@ export default function AgencySpace({ user }) {
     if (!window.confirm("Êtes-vous sûr de vouloir supprimer ce document ?")) return;
 
     try {
-      const response = await fetch(`http://127.0.0.1:5000/api/files/${fileId}`, {
+      const response = await fetch(`http://4.251.144.215:5000/api/files/${fileId}`, {
         method: 'DELETE',
         headers: apiHeaders
       });
@@ -237,7 +237,7 @@ export default function AgencySpace({ user }) {
     setBackupResult(null);
     supervisionLoading(true);
     try {
-      const response = await fetch('http://127.0.0.1:5000/api/admin/backup', {
+      const response = await fetch('http://4.251.144.215:5000/api/admin/backup', {
         method: 'POST',
         headers: apiHeaders
       });
@@ -257,7 +257,7 @@ export default function AgencySpace({ user }) {
     setCleaningResult(null);
     supervisionLoading(true);
     try {
-      const response = await fetch('http://127.0.0.1:5000/api/admin/clean-data', {
+      const response = await fetch('http://4.251.144.215:5000/api/admin/clean-data', {
         method: 'POST',
         headers: apiHeaders
       });

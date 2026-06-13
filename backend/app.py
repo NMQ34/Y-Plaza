@@ -552,5 +552,5 @@ if __name__ == '__main__':
     except Exception as e:
         print(f"Erreur d'entraînement initial : {e}")
         
-    print("Démarrage du serveur Flask sur http://127.0.0.1:5000")
-    app.run(host='127.0.0.1', port=5000, debug=True)
+    print("Démarrage du serveur Flask sur http://0.0.0.0:5000 ip publique de la VM3")
+    app.run(host='0.0.0.0', port=5000, debug=True)
